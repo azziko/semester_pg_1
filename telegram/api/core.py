@@ -15,6 +15,24 @@ class TelegramApi(object):
         req = requests.post(_url, json=data)
 
         return req.json()
+    
+    def send_options(self, chat_id):
+        _url = self.URL + self.token + "/sendMessage"
+        keyboard = [
+            ['🪨', '✂️', '📃'],
+            ['Close']
+        ]
+        reply_markup = {'keyboard': keyboard, 'resize_keyboard': True, 'one_time_keyboard': False}
+
+        data = {
+            'chat_id': chat_id,
+            'text': 'Choose an option:',
+            'reply_markup': reply_markup,
+        }
+        
+        req = requests.post(_url, json=data)
+        return print(req.json())
+
 
     def set_webhook(self, url):
         _url = self.URL + self.token + "/setWebhook"

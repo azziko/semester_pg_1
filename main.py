@@ -6,10 +6,12 @@ from flask import Flask, request
 
 from ngrok.core import get_ngrok_url
 from telegram.api.core import TelegramApi
+from handler.core import Handler
 
 app = Flask(__name__)
 TOKEN = json.load(open("./config/config.json"))['tg_token']
 telegram = TelegramApi(TOKEN)
+handler = Handler(telegram)
 
 @app.route("/")
 def index():
@@ -20,6 +22,8 @@ def update_listener():
     if request.method == 'POST':
         req = request.get_json()
         print(req)
+
+        handler.route(req)
 
     return '', 200
 
