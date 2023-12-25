@@ -1,4 +1,5 @@
 import requests
+import json
 
 class TelegramApi(object):
     URL = "https://api.telegram.org/bot"
@@ -29,10 +30,20 @@ class TelegramApi(object):
             'text': 'Choose an option:',
             'reply_markup': reply_markup,
         }
-        
         req = requests.post(_url, json=data)
-        return print(req.json())
 
+        return req.json()
+    
+    def delete_options(self, chat_id, text):
+        _url = self.URL + self.token + "/sendMessage"
+        data = {
+            'chat_id': chat_id,
+            'text': text,
+            'reply_markup': json.dumps({'remove_keyboard': True})
+        }
+        req = requests.post(_url, json=data)
+
+        return print(req.json())
 
     def set_webhook(self, url):
         _url = self.URL + self.token + "/setWebhook"
