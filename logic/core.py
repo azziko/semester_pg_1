@@ -1,9 +1,9 @@
 import random
 
 win_combs = {
-    'rock': 'scissors',
-    'scissors': 'paper',
-    'paper': 'rock',
+    '🪨': '✂️',
+    '✂️': '📃',
+    '📃': '🪨',
 }
 
 class Player:
@@ -49,8 +49,8 @@ class Matchmaker:
         opponent_id = -1
         player_id = -1
         if player.opponent != None:
-            opponent_id = player.opponent.chat_id
-            player_id = player.chat_id
+            opponent_id = player.opponent.id
+            player_id = player.id
 
             player.opponent.opponent = None
             player.opponent = None
@@ -69,13 +69,18 @@ class Matchmaker:
         return None
 
 def determine_winner(player1, player2):
+    '''
+    Determines winner of two choices. 
+    Returns 0 on draw, 1 on player1 win and 2 on player2 win.
+    '''
+
     if player1 == player2:
-        return 'It\'s a tie!'
+        return 0
 
     if win_combs[player1] == player2:
-        return 'Player 1 wins!'
+        return 1
 
-    return 'Player 2 wins!'
+    return 2
 
 def generate_random_choice():
     options = ['🪨', '✂️', '📃']
