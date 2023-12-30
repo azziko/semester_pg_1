@@ -18,6 +18,10 @@ class Matchmaker:
         self.players_waiting = []
     
     def join_matchmaking(self, player):
+        '''
+        Adds player to the queue and invokes match_player function
+        '''
+
         if player not in self.players_waiting and player.opponent is None:
             self.players_waiting.append(player)
             return self.match_players()   
@@ -25,6 +29,12 @@ class Matchmaker:
         return None 
 
     def match_players(self):
+        '''
+        If there are >2 players in the waiting queue, match the first two
+        and remove them from the queue, returning the player
+        who was first to join the queue, None otherwise.
+        '''
+
         if len(self.players_waiting) >= 2:
             player1, player2 = self.players_waiting[:2]
             self.players_waiting = self.players_waiting[2:]
@@ -37,6 +47,8 @@ class Matchmaker:
         return None
 
     def leave_matchmaking(self, player):
+        '''Disconnects a player from the matchmaking if present'''
+
         if player in self.players_waiting:
             self.players_waiting.remove(player)
 

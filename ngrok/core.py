@@ -5,8 +5,6 @@ import requests
 
 def get_ngrok_url():
     req = requests.get("http://127.0.0.1:4040/api/tunnels")
-    req.raise_for_status()
-    
     
     req = req.json()
     return req['tunnels'][0]['public_url']

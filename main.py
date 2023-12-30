@@ -1,5 +1,4 @@
 import sys
-import traceback
 import json
 
 from flask import Flask, request
@@ -21,7 +20,6 @@ def index():
 def update_listener():
     if request.method == 'POST':
         req = request.get_json()
-        print(req)
 
         handler.route(req)
 
@@ -49,7 +47,6 @@ def main():
             compare = compare_url()
         app.run()
     except Exception:
-        print (traceback.format_exc())
         sys.exit(1)
 
 if __name__ == '__main__':    

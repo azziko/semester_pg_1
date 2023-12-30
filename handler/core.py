@@ -7,6 +7,8 @@ class Handler:
         self.client = client
 
     def route(self, req):
+        '''process request according to message received'''
+
         chat_id = req['message']['chat']['id']
         text = req['message']['text']
 
@@ -26,6 +28,11 @@ class Handler:
 
         if text.startswith('/play_online'):
             player = mm.get_player(chat_id)
+
+            #Create player in case first command sent is not start
+            if player == None:
+                player = game.Player(chat_id)
+                mm.players_db.append(player)
 
             if player.opponent != None:
                 return self.client.send_message(chat_id, 'Already matched!')
@@ -86,7 +93,7 @@ class Handler:
                     player.opponent.choice = None
                 else: 
                     player.choice = text
-                    self.client.send_message(chat_id, 'The choice was made! Wait for yor opponent to respond')
+                    self.client.send_message(chat_id, 'The choice was made! Wait for your opponent to respond')
             else:
                 bot_choice = game.generate_random_choice() 
                 winner = game.determine_winner(text, bot_choice)
@@ -94,10 +101,10 @@ class Handler:
 
                 match winner:
                     case 0:
-                        self.client.send_message(chat_id, f'{response}. It\'s a draw!')
+                        self.client.send_message(chat_id, f'{response}. It\'s a draw against the bot!')
                     case 1:
-                        self.client.send_message(chat_id, f'{response}. You won!')
+                        self.client.send_message(chat_id, f'{response}. You won the bot!')
                     case 2:
-                        self.client.send_message(chat_id, f'{response}. You lost!')
+                        self.client.send_message(chat_id, f'{response}. The bot won!')
 
         return '', 200

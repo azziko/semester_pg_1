@@ -43,20 +43,18 @@ class TelegramApi(object):
         }
         req = requests.post(_url, json=data)
 
-        return print(req.json())
+        return req.json()
 
     def set_webhook(self, url):
         _url = self.URL + self.token + "/setWebhook"
         data = {"url": url}
         req = requests.post(_url, json=data)
-        req.raise_for_status()
 
         return req.json()
 
     def get_webhook_info(self):
         _url = self.URL + self.token + "/getWebhookInfo"
         req = requests.get(_url)
-        req.raise_for_status()
 
         return req.json()
 
