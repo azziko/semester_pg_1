@@ -59,9 +59,9 @@ class Handler:
                     self.client.delete_options(player_id, 'You were disconnected')
                     self.client.delete_options(opponent_id, 'Your opponents left the match')
                 else: 
-                    self.client.delete_options(player_id, 'Closed')
+                    self.client.delete_options(chat_id, 'Closed')
             else: 
-                self.client.delete_options(player_id, 'Closed')
+                self.client.delete_options(chat_id, 'Closed')
 
         if text in ['🪨', '✂️', '📃']:
             player = mm.get_player(chat_id)
